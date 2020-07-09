@@ -2,3 +2,6 @@ django
 gunicorn
 django-heroku
 django_extensions
+django-push-notifications
+pywebpush
+py-vapid
