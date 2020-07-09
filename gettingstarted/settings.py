@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "hello",
+    "django_extensions",
+    "push_notifications",
 ]
 
 MIDDLEWARE = [
@@ -51,6 +53,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+PUSH_NOTIFICATIONS_SETTINGS = {
+    "WP_PRIVATE_KEY": os.path.join(BASE_DIR, "private_key.pem"),
+    "WP_CLAIMS": {'sub': "mailto: development@example.com"}
+
+}
 
 ROOT_URLCONF = "gettingstarted.urls"
 
