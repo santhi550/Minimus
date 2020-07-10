@@ -21,6 +21,7 @@ urlpatterns = [
     path('save_push',hello.views.save_push,name="save_push"),
     path('login',hello.views.login,name="login"),
     path('signup',hello.views.signup,name="signup"),
+    path('add_item',hello.views.add_item,name="add_item"),
+    path('update_item',hello.views.update_item,name="update_item"),
     path('logout',hello.views.logout,name="logout"),
-    path('pushbots-worker.js', (TemplateView.as_view(template_name="sw.js",content_type='application/javascript', )), name='pushbots-worker.js'),
 ]

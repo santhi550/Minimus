@@ -16,32 +16,29 @@
        <!-- Latest compiled JavaScript -->
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
        <style>
+         body{
+           height:scroll;
+         }
          .logout{
            float:right;
-           padding: 10px;
-           margin:10px;
+           margin:15px;
          }
          footer{
            bottom:0;
            left:0;
-           position: absolute;
-           z-index:1;
-box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
-
-
+           position: fixed;
+           width:100%;
+          box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+          z-index: 2;
+          background-color: white;
          }
          .block{
 padding: 10px;
 margin: 10px;
          }
          .header{
-           background-color: white;
-           box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
-           padding: 10px;
-          margin-left: auto;
-          margin-right: auto;
+          margin-left:20px;
           margin-top: 20px;
-          width:50%;
          }
          .form-group{
           width:50%;
@@ -52,6 +49,7 @@ margin: 10px;
           margin-right: auto;
           padding: 30px;
           margin-top: 50px;
+          margin-bottom:200px;
       }
       @media(max-width:768px){
           .form-group{
@@ -64,42 +62,45 @@ margin: 10px;
 </head>
 <body>
   {% if user.is_authenticated  %}
-  <div class="header"><h4>Welcome {{username}}</h4></div>
-  
   <a href="{% url 'logout' %}" role="button" class="logout btn btn-outline-danger">Logout</a>
+
+  <div class="header"><h5>Welcome {{username}}</h5></div>
+  
   {% if items %}
   {% for item in items %}
   <div class="form-group">
     <form action="update_item" method="POST">
+      {% csrf_token %}
       <label for="url"><b>URL</b></label>
-      <textarea name="url" class="form-control" placeholder="Enter URL" value={{item.url}} required></textarea>
+      <textarea name="url" class="form-control" placeholder="Enter URL" required>{{item.url}}</textarea>
       <br>
       <label for="amount"><b>Your Amount</b></label>
       <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" value="{{item.amount}}" required>
       <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <center><button type="submit" class="btn btn-outline-primary">Submit</button></center>
     </form>
   </div>
   {% endfor %}
   {% else %}
   <div class="form-group">
     <form action="add_item" method="POST">
+      {% csrf_token %}
       <label for="url"><b>URL</b></label>
       <textarea name="url" class="form-control" placeholder="Enter URL"  required></textarea>
       <br>
       <label for="amount"><b>Your Amount</b></label>
       <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" required>
       <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-outline-primary">Submit</button>
     </form>
   </div>
   {% endif %}
   <footer>
 <div class="container">
   <div class="row">
-    <div class="col-xl-9 block" >
+    <div class="col-xl-7 block" >
       <div id="demo">
-        <h2>To make use of minimus account you need to subscribe</h2>
+        <h5>To make use of MINIMUS account you need to subscribe</h5>
           </div>
     </div>
     <div class="col-xl-3 block">

@@ -20,12 +20,9 @@ def index(request):
         return render(request, 'login.html')
 
 def db(request):
-
     greeting = Greeting()
     greeting.save()
-
     greetings = Greeting.objects.all()
-
     return render(request, "db.html", {"greetings": greetings})
 
 @csrf_exempt
@@ -76,4 +73,20 @@ def logout(request):
     except:
         pass
     auth.logout(request)
+    return  HttpResponseRedirect('/')
+def add_item(request):
+    if request.session.has_key('user'):
+        username = request.session['user']
+        user_id=(User.objects.get(username=username)).id
+        url=request.POST["url"]
+        amount=request.POST["amount"]
+        Items.objects.create(url=url,amount=amount,user_id=user_id)
+    return  HttpResponseRedirect('/')
+def update_item(request):
+    if request.session.has_key('user'):
+        username = request.session['user']
+        user_id=(User.objects.get(username=username)).id
+        url=request.POST["url"]
+        amount=request.POST["amount"]
+        Items.objects.filter(user_id=user_id).update(url=url,amount=amount,user_id=user_id)
     return  HttpResponseRedirect('/')

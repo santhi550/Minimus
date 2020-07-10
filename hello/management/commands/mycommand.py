@@ -9,12 +9,10 @@ import urllib.request
 from PyQt5.QtWebEngineWidgets import QWebEnginePage 
 from PyQt5.QtWidgets import QApplication 
 from PyQt5.QtCore import QUrl 
-# from push_notifications.models import WebPushDevice 
+from push_notifications.models import WebPushDevice 
 from hello.models import Items
-from django.conf import settings 
 import re
 
-settings.configure() 
 class Page(QWebEnginePage): 
 
 	def __init__(self, url): 
@@ -61,12 +59,13 @@ def mainprogram(url,amount,user_id):
 	your_price = int(amount)
 	wp=WebPushDevice.objects.get(user_id=user_id)
 	if current_price < your_price : 
-		wp.send_message("Dear your price for the given product has been decreased to Rs. "+str(current_price)+" So Book the product as early as possible") 
+		wp.send_message("Dear user, your price for the given product has been decreased , so Book the product as early as possible") 
 	
 def job(): 
 	print("Tracking....")
 	items_list=Items.objects.all()
 	for item in items_list:
+		print(item)
 		mainprogram(item.url,item.amount,item.user_id) 
 
 # main code 
