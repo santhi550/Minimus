@@ -8,5 +8,7 @@ py-vapid
 psycopg2-binary
 dj-database-url
 PyQtWebEngine
+PyQt5
+PyQt5-sip
 BeautifulSoup4
 schedule
