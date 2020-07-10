@@ -46,11 +46,11 @@ def login(request):
 def signup(request):
     if request.method =='GET':
         return render(request,"signup.html")
-    if request.method =='POST':
+    if request.method=='POST':
         username=request.POST["email"]
         psw=request.POST["psw"]
         user=User.objects.filter(username=username)
-        if user is not None:
+        if user :
             messages.info(request,'User Already Exisits')
             return HttpResponseRedirect('/signup')
         else:
