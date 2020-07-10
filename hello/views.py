@@ -34,10 +34,10 @@ def save_push(request):
             WebPushDevice.objects.filter(user_id=user_id).update(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
         else:
             WebPushDevice.objects.create(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
-        messages.info(request,'Subscribed Successfully')
-        return HttpResponseRedirect("/")
+        
+        return HttpResponse("Successfully Subscribed")
     else:
-        return render(request, 'login.html')
+        return HttpResponse("<a href='/login'>Login Again</a>")
 def login(request):
     if request.method =='GET':
         return render(request,'login.html')

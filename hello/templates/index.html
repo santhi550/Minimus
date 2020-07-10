@@ -20,13 +20,7 @@
   {% if user.is_authenticated  %}
   Welcome {{username}},
   <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe</button>
-  {% for message in messages %}
-            <div class="alert alert-primary alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                
-                <strong>{{message}}</strong>
-              </div>
-              {% endfor %}
+            
   <a href="{% url 'logout' %}" role="button" class="btn btn-outline-danger">Logout</a>
   {% endif %}
   <div id="demo">
@@ -38,7 +32,9 @@
         var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-    
+        document.getElementById("demo").innerHTML = '<div class="alert alert-primary alert-dismissible">'+
+          '<button type="button" class="close" data-dismiss="alert">&times;</button>'+
+          '<strong>'+this.responseText+'</strong></div>';
       }
     };
   xhttp.open("POST", "save_push", true);
