@@ -42,15 +42,57 @@ box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
           margin-top: 20px;
           width:50%;
          }
+         .form-group{
+          width:50%;
+          background-color: white;
+          box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+          border-radius: 20px;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 30px;
+          margin-top: 50px;
+      }
+      @media(max-width:768px){
+          .form-group{
+              width: 100%;
+              box-shadow: none;
+              border-radius: 0px;
+          }
+      }
        </style>
 </head>
 <body>
   {% if user.is_authenticated  %}
   <div class="header"></div>
   Welcome {{username}},
-            
   <a href="{% url 'logout' %}" role="button" class="logout" class="btn btn-outline-danger">Logout</a>
-  
+  {% if items %}
+  {% for item in items %}
+  <div class="form-group">
+    <form action="update_item" method="POST">
+      <label for="url"><b>URL</b></label>
+      <textarea name="url" class="form-control" placeholder="Enter URL" value={{item.url}} required></textarea>
+      <br>
+      <label for="amount"><b>Your Amount</b></label>
+      <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" value="{{item.amount}}" required>
+      <br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="form-group">
+    <form action="add_item" method="POST">
+      <label for="url"><b>URL</b></label>
+      <textarea name="url" class="form-control" placeholder="Enter URL"  required></textarea>
+      <br>
+      <label for="amount"><b>Your Amount</b></label>
+      <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" required>
+      <br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  {% endif %}
   <footer>
 <div class="container">
   <div class="row">
