@@ -32,10 +32,15 @@ def save_push(request):
         user_id=(User.objects.get(username=username)).id
         post_data=json.loads(request.body.decode('utf-8'))
         if WebPushDevice.objects.filter(user_id=user_id):
-            WebPushDevice.objects.filter(user_id=user_id).update(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
+            if WebPushDevice.objects.filter(user_id=user_id,active=True):
+                if WebPushDevice.objects.filter(user_id=user_id,active=True,registration_id=post_data.get('registration_id')):
+                    pass
+                else:
+                    WebPushDevice.objects.create(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
+            else:
+                WebPushDevice.objects.filter(user_id=user_id,active=False).delete()
         else:
             WebPushDevice.objects.create(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
-        
         return HttpResponse("Successfully Subscribed")
     else:
         return HttpResponse("<a href='/login'>Login Again</a>")

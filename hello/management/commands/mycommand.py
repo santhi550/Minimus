@@ -24,7 +24,7 @@ def check_price(soup,amount,user_id):
 
   #converting the string amount to float
   converted_price = float(price[0:5])
-  wp=WebPushDevice.objects.get(user_id=user_id)
+  wp=WebPushDevice.objects.filter(user_id=user_id,active=True)
   if converted_price < amount:
 	  wp.send_message("Dear user, your price for the "+title.strip()+" has been decreased , so Book the product as early as possible") 
 
