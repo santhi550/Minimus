@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from push_notifications.models import WebPushDevice 
-from .models import Greeting
+from .models import Greeting,Items
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
@@ -11,7 +11,11 @@ import json
 def index(request):
     if request.session.has_key('user'):
         username = request.session['user']
-        return render(request, 'index.html', {"username" : username})
+        user_id=(User.objects.get(username=username)).id
+        items_list=[]
+        if WebPushDevice.objects.filter(user_id=user_id):
+            items_list=Items.objects.filter(user_id=user_id)
+        return render(request, 'index.html', {"username" : username},{'items':items_list})
     else:
         return render(request, 'login.html')
 

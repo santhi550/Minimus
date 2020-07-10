@@ -15,17 +15,59 @@
        
        <!-- Latest compiled JavaScript -->
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+       <style>
+         .logout{
+           float:right;
+           padding: 10px;
+           margin:10px;
+         }
+         footer{
+           bottom:0;
+           left:0;
+           position: absolute;
+           z-index:1;
+
+         }
+         .block{
+padding: 10px;
+margin: 10px;
+box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+         }
+         .header{
+           background-color: white;
+           box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+           padding: 10px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 20px;
+          width:50%;
+         }
+       </style>
 </head>
 <body>
   {% if user.is_authenticated  %}
+  <div class="header"></div>
   Welcome {{username}},
-  <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe</button>
             
-  <a href="{% url 'logout' %}" role="button" class="btn btn-outline-danger">Logout</a>
-  {% endif %}
-  <div id="demo">
+  <a href="{% url 'logout' %}" role="button" class="logout" class="btn btn-outline-danger">Logout</a>
+  
+  <footer>
+<div class="container">
+  <div class="row">
+    <div class="col-xl-9 block" >
+      <div id="demo">
+        <h2>To make use of minimus account you need to subscribe</h2>
+          </div>
+    </div>
+    <div class="col-xl-3 block">
+      <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe Us</button>
 
+    </div>
   </div>
+</div>
+  </footer>
+  {% endif %}
+  
     <script>
       // Utils functions:
       function save(data){
