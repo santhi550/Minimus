@@ -19,6 +19,7 @@
 <body>
   {% if user.is_authenticated  %}
   <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe</button>
+  <a href="{% url 'logout' %}"></a>
   {% endif %}
   <div id="demo">
 

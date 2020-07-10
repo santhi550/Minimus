@@ -13,7 +13,7 @@ def index(request):
         username = request.session['user']
         return render(request, 'index.html', {"username" : username})
     else:
-        return render(request, 'index.html')
+        return render(request, 'login.html')
 
 def db(request):
 
@@ -47,14 +47,14 @@ def signup(request):
     if request.method =='GET':
         return render(request,"signup.html")
     if request.method=='POST':
-        email=request.POST["email"]
+        username=request.POST["email"]
         psw=request.POST["psw"]
-        user=User.objects.filter(username=email)
+        user=User.objects.filter(username=username)
         if user is not None:
             messages.info(request,'User Already Exisits')
             return HttpResponseRedirect('/signup')
         else:
-            user=User.objects.create_user(username=email,password=psw,email=email)
+            user=User.objects.create_user(username=username,password=psw,email=username)
             user.save()
             return  HttpResponseRedirect('/login')
 def logout(request):
