@@ -8,3 +8,4 @@ py-vapid
 psycopg2-binary
 dj-database-url
 PyQtWebEngine
+BeautifulSoup4
