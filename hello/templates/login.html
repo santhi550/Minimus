@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!--custom style-->
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <!--bootstrap-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <style>
+        html, 
+body {
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5 !important;  
+  display: flex;
+  align-items: center !important;    
+}
+
+.panel   {
+  background-color: #fff;
+}
+
+.panel__left-title {
+  font-size: 2rem;
+  color: slateblue;
+}
+.panel__left-title-logo {
+  width: 40px;
+  height: auto;
+  padding-right: 5px;
+}
+
+.panel__left-body {
+  padding: 30px 0px;  
+}
+.form-group label {  
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+input::placeholder {
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+.btn-primary {
+  background-color: slateblue !important;
+  border: slateblue !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+}
+
+.panel__left-footer a {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+.panel__right {
+  background-color:white;
+}
+
+.panel__right-title {
+  color: black;
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.panel__left-img {
+  position: absolute;
+  bottom: 1.8rem;
+  left: 0;
+}
+.panel__left-img svg {
+  width: 50%;
+  height: auto;
+}
+    </style>
+  </head>
+  <body class="px-4 px-lg-0">
+    <div class="panel col-12 col-lg-6 offset-lg-3">
+      <div class="row">
+        <div class="panel__left col-12 col-lg-7 py-4 px-4">
+          <div class="panel__left-title text-center">            
+
+            <span><b>MINIMUS</b></span>
+            {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                
+                <strong>{{message}}</strong>
+              </div>
+              {% endfor %}
+              <br>
+          </div>
+          <div class="panel__left-body">
+            <form action="login" method="POST">
+                {% csrf_token %}
+
+              <div class="form-group">
+                <label for="email"><b>Email</b></label>
+                <input
+                  type="email"
+                  name="username"
+                  class="form-control"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="passwd"><b>Password</b></label>
+                <input
+                  type="password"
+                  name="pwd"
+                  class="form-control"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div class="form-group text-center">
+                <input type="submit" value="Login" class="btn btn-primary" />
+              </div>
+            </form>
+          </div>
+          <div class="panel__left-footer text-center">
+            Don't have an account <a href="/signup"><b style="font-weight: bold;">Register</b></a> now
+          </div>
+        </div>
+        <div class="panel__right col-lg-5 d-none d-lg-block py-5 px-5">
+          
+          <div class="panel__left-img text-center w-100">
+            <!--<img src="assets/img/business.svg" alt="shop">-->
+        <img src="{% static 'cost.jpg' %}" style="width:100%">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--boostrap-->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

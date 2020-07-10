@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign up</title>
+        <!-- Latest compiled and minified CSS -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<style>
+    body{
+        background-color: slateblue;
+    }
+    .form-group{
+        width:30%;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+        border-radius: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 30px;
+        margin-top: 50px;
+    }
+    @media(max-width:768px){
+        .form-group{
+            width: 100%;
+            box-shadow: none;
+            border-radius: 0px;
+        }
+    }
+</style>
+    </head>
+    <body>
+        <div class="form-group">
+            <form action="signup" method="POST">
+                
+                {% csrf_token %}
+                <center>
+                    <h4 style="font-weight:bold">Sign Up</h4>
+                </center>
+                {% for message in messages %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    
+                    <strong>{{message}}</strong>
+                  </div>
+                  {% endfor %}
+
+                <br>
+                <label for="email"><b>Email</b></label>
+                <input type="email" placeholder="Email" class="form-control" name="email" required>
+                <br>
+                <label for="psw"><b>Password</b></label>
+                <input type="password" name="psw" class="form-control" placeholder="Password" required>
+                <br>
+                <label for="cpsw"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Confirm Password" class="form-control" name="cpsw" required>
+                <br><br> 
+                <center>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </center>
+
+            </form>
+        </div>
+    </body>
+</html>

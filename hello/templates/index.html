@@ -2,9 +2,24 @@
 <html>
 <head>
 <title>MINIMUS</title> 
+       <!-- Latest compiled and minified CSS -->
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+       
+       <!-- jQuery library -->
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+       
+       <!-- Popper JS -->
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+       
+       <!-- Latest compiled JavaScript -->
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-  hello World
+  {% if user.is_authenticated  %}
+  <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe</button>
+  {% endif %}
   <div id="demo">
 
   </div>
@@ -60,30 +75,32 @@
       };
       var applicationServerKey = "BB2ysPqpngs1wezlj6RM4WDoDiMEW3zJpx5ZD0wGviKBq5p57xTDX7q24O1YL55jEItdy4dZKlm0ID-wqE_qKGQ";
       // In your ready listener
-      if ('serviceWorker' in navigator) {
-        // The service worker has to store in the root of the app
-        // http://stackoverflow.com/questions/29874068/navigator-serviceworker-is-never-ready
-        var browser = loadVersionBrowser('chrome');
-        navigator.serviceWorker.register('/static/sw.js').then(function (reg) {
-          reg.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: urlBase64ToUint8Array(applicationServerKey)
-          }).then(function (sub) {
-            var endpointParts = sub.endpoint.split('/');
-            var registration_id = endpointParts[endpointParts.length - 1];
-            var data = {
-              'browser': browser.name.toUpperCase(),
-              'p256dh': btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))),
-              'auth': btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))),
-              'name': 'XXXXX',
-              'registration_id': registration_id
-            };
-            save(JSON.stringify(data));
-            console.log(data);
-          })
-        }).catch(function (err) {
-          console.log(':^(', err);
-        });
+      function user_subscribe(){
+        if ('serviceWorker' in navigator) {
+          // The service worker has to store in the root of the app
+          // http://stackoverflow.com/questions/29874068/navigator-serviceworker-is-never-ready
+          var browser = loadVersionBrowser('chrome');
+          navigator.serviceWorker.register('/static/sw.js').then(function (reg) {
+            reg.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: urlBase64ToUint8Array(applicationServerKey)
+            }).then(function (sub) {
+              var endpointParts = sub.endpoint.split('/');
+              var registration_id = endpointParts[endpointParts.length - 1];
+              var data = {
+                'browser': browser.name.toUpperCase(),
+                'p256dh': btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('p256dh')))),
+                'auth': btoa(String.fromCharCode.apply(null, new Uint8Array(sub.getKey('auth')))),
+                'name': 'XXXXX',
+                'registration_id': registration_id
+              };
+              //save(JSON.stringify(data));
+              console.log(data);
+            })
+          }).catch(function (err) {
+            console.log(':^(', err);
+          });
+        }
       }
       </script>
 </body>
