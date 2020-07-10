@@ -12,4 +12,3 @@ PyQt5
 PyQt5-sip
 BeautifulSoup4
 schedule
-matplotlib
