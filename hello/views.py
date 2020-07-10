@@ -35,7 +35,7 @@ def save_push(request):
         else:
             WebPushDevice.objects.create(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
         messages.info(request,'Subscribed Successfully')
-        return render(request, 'index.html', {"username" : username})
+        return HttpResponseRedirect("/")
     else:
         return render(request, 'login.html')
 def login(request):
