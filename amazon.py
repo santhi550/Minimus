@@ -9,10 +9,7 @@ import urllib.request
 from PyQt5.QtWebEngineWidgets import QWebEnginePage 
 from PyQt5.QtWidgets import QApplication 
 from PyQt5.QtCore import QUrl 
-
-import winsound 
-frequency = 2500 # Set Frequency To 2500 Hertz 
-duration = 1000 # Set Duration To 1000 ms == 1 second 
+import re
 
 
 class Page(QWebEnginePage): 
@@ -42,24 +39,24 @@ def exact_url(url):
 	
 
 def mainprogram(): 
-	url = "https://www.amazon.in/Airtel-4G-Hotspot-E5573Cs-609-Portable/dp/B06WV9WR4Z"
+	url = "https://www.amazon.in/Tarkan-Rugged-Charging-Android-Supports/dp/B07YB9R3W2/ref=lp_1389401031_1_1_sspa?s=electronics&ie=UTF8&qid=1594367074&sr=1-1-spons&psc=1&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUExTjlYT084S0lIR1kxJmVuY3J5cHRlZElkPUEwMDYyMjc0MkQzM01ZQVZSNDg3RSZlbmNyeXB0ZWRBZElkPUEwNDQzODg0MUdGT1AzSTUyMUpMVyZ3aWRnZXROYW1lPXNwX2F0Zl9icm93c2UmYWN0aW9uPWNsaWNrUmVkaXJlY3QmZG9Ob3RMb2dDbGljaz10cnVl"
 	exacturl = exact_url(url) # main url to extract data 
 	page = Page(exacturl) 
 	soup = bs.BeautifulSoup(page.html, 'html.parser') 
 	js_test = soup.find('span', id ='priceblock_ourprice') 
 	if js_test is None: 
-		js_test = soup.find('span', id ='priceblock_dealprice')		 
+		js_test = soup.find('span', id ='priceblock_saleprice')		 
 	str = "" 
+	
 	for line in js_test.stripped_strings : 
 		str = line 
 
 	# convert to integer 
-	str = str.replace(", ", "") 
-	current_price = int(float(str)) 
+	#str = str.replace(", ", "") 
+	current_price = float(re.sub(r"[^\d.]", "", str))
 	your_price = 600
 	if current_price < your_price : 
 		print("Price decreased book now") 
-		winsound.Beep(frequency, duration) 
 	else: 
 		print("Price is high please wait for the best deal") 
 	

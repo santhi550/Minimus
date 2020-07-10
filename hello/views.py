@@ -26,9 +26,18 @@ def db(request):
 
 @csrf_exempt
 def save_push(request):
-    post_data=json.loads(request.body.decode('utf-8'))
-    WebPushDevice.objects.create(name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
-    return HttpResponse("done")
+    if request.session.has_key('user'):
+        username = request.session['user']
+        user_id=(User.objects.get(username=username)).id
+        post_data=json.loads(request.body.decode('utf-8'))
+        if WebPushDevice.objects.filter(user_id=user_id):
+            WebPushDevice.objects.filter(user_id=user_id).update(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
+        else:
+            WebPushDevice.objects.create(user_id=user_id,name=post_data.get('name'),registration_id=post_data.get('registration_id'),p256dh=post_data.get('p256dh'),active=True,auth=post_data.get('auth'),browser='CHROME')
+        messages.info(request,'Subscribed Successfully')
+        return render(request, 'index.html', {"username" : username})
+    else:
+        return render(request, 'login.html')
 def login(request):
     if request.method =='GET':
         return render(request,'login.html')
