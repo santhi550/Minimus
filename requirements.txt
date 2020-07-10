@@ -5,3 +5,5 @@ django_extensions
 django-push-notifications
 pywebpush
 py-vapid
+psycopg2-binary
+dj-database-url
