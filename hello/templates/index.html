@@ -77,7 +77,10 @@ margin: 10px;
       <label for="amount"><b>Your Amount</b></label>
       <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" value="{{item.amount}}" required>
       <br>
-      <center><button type="submit" class="btn btn-outline-primary">Submit</button></center>
+      <a href="{% url 'delete_item' %}" role="button" style="float:left" class="btn btn-outline-danger">Clear</a>
+      <button type="submit" style="float: right" class="btn btn-outline-primary">Submit</button>
+      <br>
+      <br>
     </form>
   </div>
   {% endfor %}
@@ -91,7 +94,10 @@ margin: 10px;
       <label for="amount"><b>Your Amount</b></label>
       <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" required>
       <br>
-      <button type="submit" class="btn btn-outline-primary">Submit</button>
+      <a href="{% url 'delete_item' %}" role="button" style="float:left" class="btn btn-outline-danger">Clear</a>
+      <button type="submit" style="float: right" class="btn btn-outline-primary">Submit</button>
+      <br>
+      <br>
     </form>
   </div>
   {% endif %}

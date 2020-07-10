@@ -90,3 +90,9 @@ def update_item(request):
         amount=request.POST["amount"]
         Items.objects.filter(user_id=user_id).update(url=url,amount=amount,user_id=user_id)
     return  HttpResponseRedirect('/')
+def delete_item(request):
+    if request.session.has_key('user'):
+        username = request.session['user']
+        user_id=(User.objects.get(username=username)).id
+        Items.objects.filter(user_id=user_id).delete()
+    return  HttpResponseRedirect('/')

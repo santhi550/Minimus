@@ -23,5 +23,6 @@ urlpatterns = [
     path('signup',hello.views.signup,name="signup"),
     path('add_item',hello.views.add_item,name="add_item"),
     path('update_item',hello.views.update_item,name="update_item"),
+    path('delete_item',hello.views.delete_item,name="delete_item"),
     path('logout',hello.views.logout,name="logout"),
 ]
