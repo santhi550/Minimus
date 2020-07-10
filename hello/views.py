@@ -15,7 +15,7 @@ def index(request):
         items_list=[]
         if WebPushDevice.objects.filter(user_id=user_id):
             items_list=Items.objects.filter(user_id=user_id)
-        return render(request, 'index.html', {"username" : username},{'items':items_list})
+        return render(request, 'index.html', {"username" : username,'items':items_list})
     else:
         return render(request, 'login.html')
 
