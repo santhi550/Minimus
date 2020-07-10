@@ -13,3 +13,4 @@ PyQt5-sip
 BeautifulSoup4
 schedule
 PyOpenGL
+PyOpenGL_accelerate
