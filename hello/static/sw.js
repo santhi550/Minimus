@@ -1,14 +1,14 @@
 
 var getTitle = function (title) {
     if (title === "") {
-            title = "TITLE DEFAULT";
+            title = "MINIMUS";
     }
     return title;
 };
 var getNotificationOptions = function (message, message_tag) {
     var options = {
             body: message,
-            icon: 'lang-logo.png',
+            icon: 'logo.png',
             tag: message_tag,
             vibrate: [200, 100, 200, 100, 200, 100, 200]
     };
