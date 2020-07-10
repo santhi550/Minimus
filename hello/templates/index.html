@@ -18,8 +18,9 @@
 </head>
 <body>
   {% if user.is_authenticated  %}
+  Welcome {{username}},
   <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe</button>
-  <a href="{% url 'logout' %}"></a>
+  <a href="{% url 'logout' %}" role="button" class="btn btn-outline-danger">Logout</a>
   {% endif %}
   <div id="demo">
 
