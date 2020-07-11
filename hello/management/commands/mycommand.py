@@ -24,12 +24,15 @@ def check_price(soup,amount,user_id):
 	  pre=soup.find(id = "priceblock_ourprice")
   price =pre.get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
   #print(price)
-
+  availability=soup.find(id="availability").get_text().strip()
+  print(availability)
   #converting the string amount to float
   converted_price = float(price[0:5])
   wp=WebPushDevice.objects.filter(user_id=user_id,active=True)
   if converted_price < amount:
-	  wp.send_message("Dear user, your price for the "+title.strip()+" has been decreased , so Book the product as early as possible") 
+	  wp.send_message("Dear user, your price for the given product has been DECREASED , so Book the product as early as possible") 
+  if availability == 'In stock.':
+	  wp.send_message("Dear user, for the given product is available ,so Book the product as early as possible") 
 
 
 def mainprogram(url,amount,user_id):
@@ -44,4 +47,4 @@ while(True):
   for item in items_list:
     print(item.url)
     mainprogram(item.url,item.amount,item.user_id) 
-  time.sleep(5)
+  time.sleep(60*60)
