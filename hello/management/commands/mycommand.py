@@ -18,7 +18,7 @@ headers = {
 
 # function to check if the price has dropped below 20,000
 def check_price(soup,amount,user_id):
-  title = soup.find(id= "productTitle").get_text()
+  # title = soup.find(id= "productTitle").get_text()
   pre=soup.find(id = "priceblock_saleprice")
   if pre is None:
 	  pre=soup.find(id = "priceblock_ourprice")
@@ -29,7 +29,7 @@ def check_price(soup,amount,user_id):
   converted_price = float(price[0:5])
   wp=WebPushDevice.objects.filter(user_id=user_id,active=True)
   if converted_price < amount:
-	  wp.send_message("Dear user, your price for the "+title.strip()+" has been decreased , so Book the product as early as possible") 
+	  wp.send_message("Dear user, your price for the given product has been decreased , so Book the product as early as possible") 
 
 
 def mainprogram(url,amount,user_id):
