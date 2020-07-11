@@ -44,11 +44,14 @@ def check_price(soup,amount,user_id,user_availability):
 
 
 def mainprogram(url,amount,user_id,availability):
-  response = requests.get(url, headers=headers)
-  soup = BeautifulSoup(response.content, 'html.parser')
-  print(response)
-  soup.encode('utf-8')
-  check_price(soup,amount,user_id,availability)
+  try:
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    print(response)
+    soup.encode('utf-8')
+    check_price(soup,amount,user_id,availability)
+  except:
+    pass
 
 while(True):
   items_list=Items.objects.all()
