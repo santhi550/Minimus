@@ -7,7 +7,7 @@ from hello.models import Items
 import requests
 from bs4 import BeautifulSoup
 import time
-
+import types
 # set the headers and user string
 headers = {
 "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
@@ -19,17 +19,11 @@ headers = {
 # function to check if the price has dropped below 20,000
 def check_price(soup,amount,user_id,user_availability):
   # title = soup.find(id= "productTitle").get_text()
-  pre=""
-  try:
-    pre=soup.find(id = "priceblock_ourprice")
+  pre=soup.find('span',id = "priceblock_ourprice")
+  print(pre)
+  if pre is None:
+    pre=soup.find('span',id = "priceblock_saleprice")
     print(pre)
-  except:
-    pass
-  try:
-    pre=soup.find(id = "priceblock_saleprice")
-    print(pre)
-  except:
-    pass
   print(pre)
   price =pre.get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
   #print(price)
@@ -50,10 +44,11 @@ def check_price(soup,amount,user_id,user_availability):
 
 
 def mainprogram(url,amount,user_id,availability):
-	response = requests.get(url, headers=headers)
-	soup = BeautifulSoup(response.content, 'html.parser')
-	soup.encode('utf-8')
-	check_price(soup,amount,user_id,availability)
+  response = requests.get(url, headers=headers)
+  soup = BeautifulSoup(response.content, 'html.parser')
+  print(response)
+  soup.encode('utf-8')
+  check_price(soup,amount,user_id,availability)
 
 while(True):
   items_list=Items.objects.all()
