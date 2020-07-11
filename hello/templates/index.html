@@ -16,29 +16,36 @@
        <!-- Latest compiled JavaScript -->
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
        <style>
-         body{
-           height:scroll;
-         }
+
          .logout{
            float:right;
            margin:15px;
          }
          footer{
-           bottom:0;
-           left:0;
-           position: fixed;
-           width:100%;
-          box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
-          z-index: 2;
-          background-color: white;
+           margin-left: auto;
+           margin-right: auto;
+           width:50%;
          }
          .block{
 padding: 10px;
-margin: 10px;
          }
          .header{
           margin-left:20px;
           margin-top: 20px;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+
+          -ms-word-break: break-all;
+          /* This is the dangerous one in WebKit, as it breaks things wherever */
+          word-break: break-all;
+          /* Instead use this non-standard one: */
+          word-break: break-word;
+
+          /* Adds a hyphen where the word breaks, if supported (No Blink) */
+          -ms-hyphens: auto;
+          -moz-hyphens: auto;
+          -webkit-hyphens: auto;
+          hyphens: auto;
          }
          .form-group{
           width:50%;
@@ -49,13 +56,15 @@ margin: 10px;
           margin-right: auto;
           padding: 30px;
           margin-top: 50px;
-          margin-bottom:200px;
       }
       @media(max-width:768px){
           .form-group{
               width: 100%;
               box-shadow: none;
               border-radius: 0px;
+          }
+          footer{
+            width: 90%;
           }
       }
        </style>
@@ -72,16 +81,74 @@ margin: 10px;
     <form action="update_item" method="POST">
       {% csrf_token %}
       <label for="url"><b>URL</b></label>
-      <textarea name="url" class="form-control" placeholder="Enter URL" required>{{item.url}}</textarea>
+      <textarea name="url" class="form-control" placeholder="Enter URL"  rows="5" required>{{item.url}}</textarea>
       <br>
+      <div class="form-check">
+        <label class="form-check-label" for="check1">
+          <input type="checkbox" class="form-check-input" id="check1" name="availability-check" value="True" >Check Availability
+        </label>
+      </div>
+      <input type="hidden" id="availability" name="availability" value="{{item.availability}}">
+      <div class="form-check">
+        <label class="form-check-label" for="check2">
+          <input type="checkbox" class="form-check-input" id="check2" name="amount-check" value="True">Track with your amount
+        </label>
+      </div>
+      <div id="amount-div" style="display: none" >
+        <br>
       <label for="amount"><b>Your Amount</b></label>
-      <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" value="{{item.amount}}" required>
+      <input id="amount" type="number" class="form-control" name="amount" value="{{item.amount}}"  placeholder="Enter Your Amount" required>
+      </div>
       <br>
       <a href="{% url 'delete_item' %}" role="button" style="float:left" class="btn btn-outline-danger">Clear</a>
-      <button type="submit" style="float: right" class="btn btn-outline-primary">Submit</button>
+      <button type="submit" style="float: right" class="btn btn-outline-primary">Save</button>
       <br>
       <br>
     </form>
+    <script>
+      $(document).ready(function(){
+        
+        if(parseInt(document.getElementById("amount").value)==0){
+          document.getElementById("check2").checked=false;
+
+        }
+        else{
+          document.getElementById("check2").checked=true;
+       }
+        if(document.getElementById("availability").value=="True"){
+          document.getElementById("check1").checked=true;
+        }
+        else{
+          document.getElementById("check1").checked=false;
+
+        }
+        if($("#check2").prop("checked") == true){
+          $("#amount-div").show(); 
+        }
+        else if($("#check2").prop("checked") == false){
+          $("#amount-div").hide();
+          document.getElementById("amount").value=0;
+        }
+      $("#check2").click(function(){
+        if($(this).prop("checked") == true){
+          $("#amount-div").show();
+        }
+        else if($(this).prop("checked") == false){
+          $("#amount-div").hide();
+          document.getElementById("amount").value=0;
+        }
+      });
+     
+    $("#check1").click(function(){
+      if($(this).prop("checked") == true){
+        document.getElementById("availability").value="True";
+      }
+      else if($(this).prop("checked") == false){
+        document.getElementById("availability").value="False";
+      }
+    });
+      });
+      </script>
   </div>
   {% endfor %}
   {% else %}
@@ -89,32 +156,75 @@ margin: 10px;
     <form action="add_item" method="POST">
       {% csrf_token %}
       <label for="url"><b>URL</b></label>
-      <textarea name="url" class="form-control" placeholder="Enter URL"  required></textarea>
+      <textarea name="url" class="form-control" placeholder="Enter URL" cols="10" required></textarea>
       <br>
+      <div class="form-check">
+        <label class="form-check-label" for="check1">
+          <input type="checkbox" class="form-check-input" id="check1" name="availability-check" value="True" >Check Availability
+        </label>
+      </div>
+      <input type="hidden" id="availability" name="availability">
+      <div class="form-check">
+        <label class="form-check-label" for="check2">
+          <input type="checkbox" class="form-check-input" id="check2" name="amount-check" value="True">Track with your amount
+        </label>
+      </div>
+      <div id="amount-div" style="display: none" >
+        <br>
       <label for="amount"><b>Your Amount</b></label>
-      <input type="number" class="form-control" name="amount" placeholder="Enter Your Amount" required>
+      <input type="number" id="amount" class="form-control" name="amount" value="0" placeholder="Enter Your Amount" required>
+      </div>
       <br>
       <a href="{% url 'delete_item' %}" role="button" style="float:left" class="btn btn-outline-danger">Clear</a>
-      <button type="submit" style="float: right" class="btn btn-outline-primary">Submit</button>
+      <button type="submit" style="float: right" class="btn btn-outline-primary">Save</button>
       <br>
       <br>
     </form>
   </div>
+  <script>
+    $(document).ready(function(){
+      if($("#check2").prop("checked") == true){
+        $("#amount-div").show(); 
+      }
+      else if($("#check2").prop("checked") == false){
+        $("#amount-div").hide();
+        document.getElementById("amount").value=0;
+      }
+    $("#check2").click(function(){
+      if($(this).prop("checked") == true){
+        $("#amount-div").show();
+      }
+      else if($(this).prop("checked") == false){
+        $("#amount-div").hide();
+        document.getElementById("amount").value=0;
+      }
+    });
+    if($("#check1").prop("checked") == true){
+        document.getElementById("availability").value="True";
+    }
+    else if($("#check1").prop("checked") == false){
+      document.getElementById("availability").value="False";
+      
+    }
+  $("#check1").click(function(){
+    if($(this).prop("checked") == true){
+      document.getElementById("availability").value="True";
+    }
+    else if($(this).prop("checked") == false){
+      document.getElementById("availability").value="False";
+    }
+  });
+    });
+    </script>
   {% endif %}
   <footer>
-<div class="container">
-  <div class="row">
-    <div class="col-xl-7 block" >
+    <div class="jumbotron-fluid block text-center" >
       <div id="demo">
-        <h6>To make use of MINIMUS account you need to subscribe.If you did ignore.</h6>
+        <div class="alert alert-primary alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong>To make use of MINIMUS account you need to allow notifications.If you did ignore.</strong></div>
           </div>
     </div>
-    <div class="col-xl-3 block">
-      <button type="button" class="btn btn-outline-success" onclick="user_subscribe()">Subscribe Us</button>
-
-    </div>
-  </div>
-</div>
   </footer>
   {% endif %}
   
@@ -199,6 +309,7 @@ margin: 10px;
           });
         }
       }
+      user_subscribe();
       </script>
 </body>
 </html>

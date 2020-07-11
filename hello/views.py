@@ -85,7 +85,8 @@ def add_item(request):
         user_id=(User.objects.get(username=username)).id
         url=request.POST["url"]
         amount=request.POST["amount"]
-        Items.objects.create(url=url,amount=amount,user_id=user_id)
+        availability=request.POST["availability"]
+        Items.objects.create(url=url,amount=amount,user_id=user_id,availability=availability)
     return  HttpResponseRedirect('/')
 def update_item(request):
     if request.session.has_key('user'):
@@ -93,7 +94,8 @@ def update_item(request):
         user_id=(User.objects.get(username=username)).id
         url=request.POST["url"]
         amount=request.POST["amount"]
-        Items.objects.filter(user_id=user_id).update(url=url,amount=amount,user_id=user_id)
+        availability=request.POST["availability"]
+        Items.objects.filter(user_id=user_id).update(url=url,amount=amount,availability=availability)
     return  HttpResponseRedirect('/')
 def delete_item(request):
     if request.session.has_key('user'):

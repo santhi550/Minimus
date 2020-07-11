@@ -17,7 +17,7 @@ headers = {
 #print(soup.prettify())
 
 # function to check if the price has dropped below 20,000
-def check_price(soup,amount,user_id):
+def check_price(soup,amount,user_id,user_availability):
   # title = soup.find(id= "productTitle").get_text()
   pre=soup.find(id = "priceblock_ourprice")
   if pre is None:
@@ -25,26 +25,31 @@ def check_price(soup,amount,user_id):
   price =pre.get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
   #print(price)
   availability=soup.find(id="availability").get_text().strip()
-  print(availability)
+  # print(availability)
   #converting the string amount to float
   converted_price = float(price[0:5])
   wp=WebPushDevice.objects.filter(user_id=user_id,active=True)
-  if converted_price < amount:
-	  wp.send_message("Dear user, your price for the given product has been DECREASED , so Book the product as early as possible") 
-  if availability == 'In stock.':
-	  wp.send_message("Dear user, the given product is in STOCK ,so Book the product as early as possible") 
+  if user_availability and amount ==0:
+    if availability == 'In stock.':
+      wp.send_message("Dear user, the given product is in STOCK ,so book the product as soon as possible")
+  elif user_availability== False and amount > 0:
+    if converted_price < amount:
+      wp.send_message("Dear user, price for the given product has been DECREASED , so book the product as soon as possible")
+  elif user_availability and amount > 0:
+    if availability == 'In stock.' and converted_price < amount:
+      wp.send_message("Dear user, the given product is in STOCK and its price has been DECREASED , so Book the product as soon as possible")
 
 
-def mainprogram(url,amount,user_id):
+def mainprogram(url,amount,user_id,availability):
 	response = requests.get(url, headers=headers)
 	soup = BeautifulSoup(response.content, 'html.parser')
 	soup.encode('utf-8')
-	check_price(soup,amount,user_id)
+	check_price(soup,amount,user_id,availability)
 
 while(True):
   items_list=Items.objects.all()
-  print("Tracking")
+  # print("Tracking")
   for item in items_list:
     print(item.url)
-    mainprogram(item.url,item.amount,item.user_id) 
-  time.sleep(25*60)
+    mainprogram(item.url,item.amount,item.user_id,item.availability) 
+  time.sleep(5)
