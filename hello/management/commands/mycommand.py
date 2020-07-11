@@ -32,7 +32,7 @@ def check_price(soup,amount,user_id):
   if converted_price < amount:
 	  wp.send_message("Dear user, your price for the given product has been DECREASED , so Book the product as early as possible") 
   if availability == 'In stock.':
-	  wp.send_message("Dear user, for the given product is available ,so Book the product as early as possible") 
+	  wp.send_message("Dear user, the given product is in STOCK ,so Book the product as early as possible") 
 
 
 def mainprogram(url,amount,user_id):
