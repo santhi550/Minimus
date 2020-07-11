@@ -19,11 +19,17 @@ headers = {
 # function to check if the price has dropped below 20,000
 def check_price(soup,amount,user_id,user_availability):
   # title = soup.find(id= "productTitle").get_text()
-  pre=soup.find(id = "priceblock_ourprice")
-  print(pre)
-  if pre == None:
+  pre=""
+  try:
+    pre=soup.find(id = "priceblock_ourprice")
+    print(pre)
+  except:
+    pass
+  try:
     pre=soup.find(id = "priceblock_saleprice")
     print(pre)
+  except:
+    pass
   print(pre)
   price =pre.get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
   #print(price)
