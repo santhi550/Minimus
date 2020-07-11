@@ -52,4 +52,4 @@ while(True):
   for item in items_list:
     print(item.url)
     mainprogram(item.url,item.amount,item.user_id,item.availability) 
-  time.sleep(25*60)
+  time.sleep(5*60)
