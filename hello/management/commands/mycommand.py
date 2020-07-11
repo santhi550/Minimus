@@ -20,10 +20,11 @@ headers = {
 def check_price(soup,amount,user_id,user_availability):
   # title = soup.find(id= "productTitle").get_text()
   pre=soup.find(id = "priceblock_ourprice")
-  if pre:
-    pass
-  else:
+  print(pre)
+  if pre == None:
     pre=soup.find(id = "priceblock_saleprice")
+    print(pre)
+  print(pre)
   price =pre.get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
   #print(price)
   availability=soup.find(id="availability").get_text().strip()
