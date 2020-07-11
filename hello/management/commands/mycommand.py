@@ -20,7 +20,9 @@ headers = {
 def check_price(soup,amount,user_id,user_availability):
   # title = soup.find(id= "productTitle").get_text()
   pre=soup.find(id = "priceblock_ourprice")
-  if pre is None:
+  if pre:
+    pass
+  else:
     pre=soup.find(id = "priceblock_saleprice")
   price =pre.get_text().replace(',', '').replace('₹', '').replace(' ', '').strip()
   #print(price)
@@ -52,4 +54,4 @@ while(True):
   for item in items_list:
     print(item.url)
     mainprogram(item.url,item.amount,item.user_id,item.availability) 
-  time.sleep(5*60)
+  time.sleep(1)
