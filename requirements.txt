@@ -8,3 +8,5 @@ gunicorn
 whitenoise
 psycopg2==2.8.4
 dj-database-url==0.5.0
+html5lib
+lxml
