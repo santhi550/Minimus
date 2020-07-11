@@ -14,39 +14,39 @@ import types
 # }
 site='https://www.amazon.in/gp/sign-in.html'
 
-  session = requests.Session()
-  
-  '''define session headers'''
-  session.headers = {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
-  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-  'Accept-Language': 'en-US,en;q=0.5',
-  'Referer': site
-  }
+session = requests.Session()
 
-  resp = session.get(site)
-  html = resp.text
+'''define session headers'''
+session.headers = {
+'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
+'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+'Accept-Language': 'en-US,en;q=0.5',
+'Referer': site
+}
+
+resp = session.get(site)
+html = resp.text
+
+'''get BeautifulSoup object of the html of the login page'''
+soup = BeautifulSoup(html , 'lxml')
+data = {}
+form = soup.find('form', {'name': 'signIn'})
+for field in form.find_all('input'):
+  try:
+      data[field['name']] = field['value']
   
-  '''get BeautifulSoup object of the html of the login page'''
-  soup = BeautifulSoup(html , 'lxml')
-  data = {}
-  form = soup.find('form', {'name': 'signIn'})
-  for field in form.find_all('input'):
-    try:
-        data[field['name']] = field['value']
-    
-    except:
-        pass
-  data[u'email'] = 'santhikiran2000@gmail.com'
-  data[u'password'] = 'spring@123'
-  post_resp = session.post('https://www.amazon.in/ap/signin', data = data)
-  #print(soup.prettify())
-  post_soup = BeautifulSoup(post_resp.content , 'lxml')
-  
-  if post_soup.find_all('title')[0].text == 'Your Account':
-      print('Login Successfull')
-  else:
-      print('Login Failed')
+  except:
+      pass
+data[u'email'] = 'santhikiran2000@gmail.com'
+data[u'password'] = 'spring@123'
+post_resp = session.post('https://www.amazon.in/ap/signin', data = data)
+#print(soup.prettify())
+post_soup = BeautifulSoup(post_resp.content , 'lxml')
+
+if post_soup.find_all('title')[0].text == 'Your Account':
+    print('Login Successfull')
+else:
+    print('Login Failed')
 # function to check if the price has dropped below 20,000
 def check_price(soup,amount,user_id,user_availability):
   # title = soup.find(id= "productTitle").get_text()
