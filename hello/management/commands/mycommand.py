@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 import schedule 
 from push_notifications.models import WebPushDevice 
 from hello.models import Items
-import grequests
+import requests
 from bs4 import BeautifulSoup
 import time
 import types
@@ -45,7 +45,7 @@ def check_price(soup,amount,user_id,user_availability):
 
 def mainprogram(url,amount,user_id,availability):
   try:
-    response = grequests.get(url, headers=headers)
+    response = requests.get(url, headers=headers,timeout=60)
     soup = BeautifulSoup(response.content, 'html.parser')
     print(response)
     soup.encode('utf-8')
