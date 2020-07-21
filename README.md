@@ -9,3 +9,5 @@ BeautifulSoup module has been used for webscrapping the given url
 Django web push notifications  has been added for sending notifications asynchronously
 
 for sample, amazon products can be tracked.
+
+This website has been deployed in heroku( https://minimus.herokuapp.com)
