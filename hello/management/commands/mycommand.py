@@ -37,8 +37,8 @@ for field in form.find_all('input'):
   
   except:
       pass
-data[u'email'] = 'santhikiran2000@gmail.com'
-data[u'password'] = 'django@123'
+data[u'email'] = 'amazon_email'
+data[u'password'] = 'amazon_password'
 post_resp = session.post('https://www.amazon.in/ap/signin', data = data)
 #print(soup.prettify())
 post_soup = BeautifulSoup(post_resp.content , 'lxml')
